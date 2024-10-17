@@ -71,7 +71,7 @@ public class GUI extends Application{
 
             EventHandler<ActionEvent> event = new EventHandler<ActionEvent>(){
                 public void handle(ActionEvent e){
-                    control.addAuction();
+                    control.createAuctionData(title.getText(), description.getText(), category.getText(), tags.getText(), condition.getText(), shippingCost.getText(), buyNow.getText(), duration.getText());
                 }
             };
 

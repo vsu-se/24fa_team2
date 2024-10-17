@@ -72,4 +72,12 @@ public class Auction {
     public boolean hasBids() {
         return !bids.isEmpty();
     }
+
+    @Override
+    public String toString(){
+        String msg;
+
+
+        return msg;
+    }
 }

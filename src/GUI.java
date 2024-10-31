@@ -70,15 +70,22 @@ public class GUI extends Application {
         mainLayout.getChildren().clear();
         mainLayout.getChildren().add(createRoleButtons());
 
+        // Bolded label for Active Auctions
         Label showActiveAuctionsLabel = new Label("Active Auctions:");
+        showActiveAuctionsLabel.setStyle("-fx-font-weight: bold;"); // Make the text bold
         mainLayout.getChildren().add(showActiveAuctionsLabel);
 
         VBox activeAuctionsBox = new VBox();
-        activeAuctionsBox.setSpacing(5);
+        activeAuctionsBox.setSpacing(10); // Increase spacing between auction boxes
 
         for (Auction auction : activeAuctions) {
+            VBox auctionBox = new VBox();
+            auctionBox.setStyle("-fx-border-color: gray; -fx-border-width: 1px; -fx-padding: 10;"); // Add border and padding
+
             Label auctionLabel = new Label(auction.toString() + " - Buy Now: $" + auction.buyNow);
-            activeAuctionsBox.getChildren().add(auctionLabel);
+            auctionBox.getChildren().add(auctionLabel);
+
+            activeAuctionsBox.getChildren().add(auctionBox);
         }
 
         mainLayout.getChildren().add(activeAuctionsBox);
@@ -91,6 +98,7 @@ public class GUI extends Application {
         Label showBuyerReport = new Label("Show Buyer's Report (Placeholder)");
         mainLayout.getChildren().add(showBuyerReport);
     }
+
 
     private void showSellerView() {
         mainLayout.getChildren().clear();

@@ -22,7 +22,7 @@ public class Auction {
 
     @Override
     public String toString(){
-        String msg;
+        String msg = this.item.toString();
 
 
         return msg;

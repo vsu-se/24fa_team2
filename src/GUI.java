@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.scene.layout.*;
 import javafx.beans.property.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class GUI extends Application {
 
@@ -12,6 +14,7 @@ public class GUI extends Application {
     private IntegerProperty screenHeight = new SimpleIntegerProperty();
     Label lbl = new Label("Start");
     private VBox mainLayout = new VBox();
+    private List<Auction> activeAuctions = new ArrayList<>();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -67,9 +70,27 @@ public class GUI extends Application {
         mainLayout.getChildren().clear();
         mainLayout.getChildren().add(createRoleButtons());
 
-        // Add placeholders for Buyer functionalities
-        Label showActiveAuctions = new Label("Show Active Auctions (Placeholder)");
-        mainLayout.getChildren().add(showActiveAuctions);
+        // Bolded label for Active Auctions
+        Label showActiveAuctionsLabel = new Label("Active Auctions:");
+        showActiveAuctionsLabel.setStyle("-fx-font-weight: bold;"); // Make the text bold
+        mainLayout.getChildren().add(showActiveAuctionsLabel);
+
+        VBox activeAuctionsBox = new VBox();
+        activeAuctionsBox.setSpacing(10); // Increase spacing between auction boxes
+
+        for (Auction auction : activeAuctions) {
+            VBox auctionBox = new VBox();
+            auctionBox.setStyle("-fx-border-color: gray; -fx-border-width: 1px; -fx-padding: 10;"); // Add border and padding
+
+            Label auctionLabel = new Label(auction.toString() + " - Buy Now: $" + auction.buyNow);
+            auctionBox.getChildren().add(auctionLabel);
+
+            activeAuctionsBox.getChildren().add(auctionBox);
+        }
+
+        mainLayout.getChildren().add(activeAuctionsBox);
+
+        // Other Buyer functionalities
         Label bidOnItem = new Label("Bid on Item (Placeholder)");
         mainLayout.getChildren().add(bidOnItem);
         Label showMyBids = new Label("Show My Bids (Placeholder)");
@@ -77,6 +98,7 @@ public class GUI extends Application {
         Label showBuyerReport = new Label("Show Buyer's Report (Placeholder)");
         mainLayout.getChildren().add(showBuyerReport);
     }
+
 
     private void showSellerView() {
         mainLayout.getChildren().clear();
@@ -113,7 +135,33 @@ public class GUI extends Application {
         newAuction.getChildren().add(duration);
 
         Button addAuction = new Button("Create Auction");
-        addAuction.setOnAction(e -> lbl.setText("Auction Created with Title: " + title.getText()));
+        addAuction.setOnAction(e -> {
+            try {
+                // Create Item instance from input fields
+                Item item = new Item(
+                        title.getText(),
+                        description.getText(),
+                        category.getText(),
+                        condition.getText(),
+                        Double.parseDouble(shippingCost.getText())
+                );
+
+                // Parse the buy now price
+                double buyNowPrice = Double.parseDouble(buyNow.getText());
+
+                // Create Auction with Item and buyNow price
+                Auction auction = new Auction(item, buyNowPrice);
+
+                // Add the Auction to the activeAuctions list
+                activeAuctions.add(auction);
+
+                lbl.setText("Auction Created with Title: " + title.getText());
+
+            } catch (NumberFormatException ex) {
+                lbl.setText("Error: Please enter valid numbers for Shipping Cost and Buy Now price.");
+            }
+        });
+
         newAuction.getChildren().add(addAuction);
         newAuction.getChildren().add(lbl);
 

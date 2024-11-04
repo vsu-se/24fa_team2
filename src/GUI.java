@@ -1,4 +1,3 @@
-import com.sun.jdi.BooleanType;
 import javafx.application.Application;
 import javafx.geometry.*;
 import javafx.scene.*;
@@ -15,24 +14,16 @@ public class GUI extends Application {
     private IntegerProperty screenHeight = new SimpleIntegerProperty();
     Label lbl = new Label("Start");
     private VBox mainLayout = new VBox();
-    private Group root = new Group();
     private List<Auction> activeAuctions = new ArrayList<>();
-
-    private Button btnAuctionPane = new Button("Show Auctions");
-    private Button btnLogin = new Button("Login");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // User role buttons
-        btnAuctionPane.setOnAction(e -> getAuctionPane());
-        btnLogin.setOnAction(e -> getTestPane());
-        root.getChildren().add(btnLogin);
-        //root.getChildren().add(btnAuctionPane);
-        //HBox roleSelection = createRoleButtons();
+        HBox roleSelection = createRoleButtons();
 
-        //root.getChildren().add(roleSelection);
+        mainLayout.getChildren().add(roleSelection);
 
-        Scene scene = new Scene(root, 1000, 600);
+        Scene scene = new Scene(mainLayout, 1000, 600);
         primaryStage.setScene(scene);
         primaryStage.setMinHeight(600);
         primaryStage.setMinWidth(1000);
@@ -44,16 +35,6 @@ public class GUI extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    private void getTestPane(){
-        root.getChildren().clear();
-        root.getChildren().add(new TestView().getRootPane());
-    }
-
-    private void getAuctionPane(){
-        root.getChildren().clear();
-        root.getChildren().add(new AuctionsView().getRootPane());
     }
 
     private HBox createRoleButtons() {

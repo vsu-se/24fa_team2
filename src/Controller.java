@@ -21,5 +21,11 @@ public class Controller {
 
     }
 
+    public void setCommission(String commission){
+        aManager.setSellerCommission(Double.parseDouble(commission));
+
+        gui.lbl.setText("Commission set to " + aManager.getSellerCommission() + "%");
+    }
+
     //Thread to constantly update GUI Auction info?
 }

@@ -18,6 +18,10 @@ public class AuctionSystemModel{
         this.sellerCommission = sellerCommission;
     }
 
+    public double getSellerCommission(){
+        return sellerCommission;
+    }
+
     public void setBuyerPremium(double buyerPremium){
         this.buyerPremium = buyerPremium;
     }

@@ -15,9 +15,11 @@ public class GUI extends Application {
     Label lbl = new Label("Start");
     private VBox mainLayout = new VBox();
     private List<Auction> activeAuctions = new ArrayList<>();
+    private Controller control;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        control = new Controller(this);
         // User role buttons
         HBox roleSelection = createRoleButtons();
 
@@ -177,17 +179,19 @@ public class GUI extends Application {
         Label commissionLabel = new Label("Set Seller's Commission");
         commissionPane.getChildren().add(commissionLabel);
 
-        TextField username = new TextField();
-        username.setPromptText("Seller Username");
-        commissionPane.getChildren().add(username);
+        // TextField username = new TextField();
+        // username.setPromptText("Seller Username");
+        // commissionPane.getChildren().add(username);
 
         TextField commissionRate = new TextField();
         commissionRate.setPromptText("Commission Rate (%)");
         commissionPane.getChildren().add(commissionRate);
 
         Button setCommission = new Button("Set Commission");
-        setCommission.setOnAction(e -> lbl.setText("Commission set for " + username.getText() + ": " + commissionRate.getText() + "%"));
+        setCommission.setOnAction(e -> control.setCommission(commissionRate.getText()));
         commissionPane.getChildren().add(setCommission);
+
+        commissionPane.getChildren().add(lbl);
 
         return commissionPane;
     }

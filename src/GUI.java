@@ -60,10 +60,8 @@ public class GUI extends Application {
         mainLayout.getChildren().clear();
         mainLayout.getChildren().add(createRoleButtons());
         mainLayout.getChildren().add(createCommissionPane());
-
-        // Add placeholders for other System Admin functionalities
-        Label buyerPremium = new Label("Set Buyer Premium (Placeholder)");
-        mainLayout.getChildren().add(buyerPremium);
+        mainLayout.getChildren().add(createPremiumPane());
+        mainLayout.getChildren().add(lbl);
         Label showConcludedAuctions = new Label("Show Concluded Auctions (Placeholder)");
         mainLayout.getChildren().add(showConcludedAuctions);
     }
@@ -140,6 +138,8 @@ public class GUI extends Application {
         addAuction.setOnAction(e -> {
             try {
                 // Create Item instance from input fields
+
+                //This needs to be handled by Controller
                 Item item = new Item(
                         title.getText(),
                         description.getText(),
@@ -191,8 +191,30 @@ public class GUI extends Application {
         setCommission.setOnAction(e -> control.setCommission(commissionRate.getText()));
         commissionPane.getChildren().add(setCommission);
 
-        commissionPane.getChildren().add(lbl);
-
         return commissionPane;
+    }
+
+    public Region createPremiumPane(){
+        VBox premiumPane = new VBox();
+        premiumPane.setPadding(new Insets(10));
+        premiumPane.setSpacing(10);
+        premiumPane.setStyle("-fx-border-color: gray; -fx-border-width: 1px;");
+
+        Label premiumLabel = new Label("Set Buyer's Premium");
+        premiumPane.getChildren().add(premiumLabel);
+
+        // TextField username = new TextField();
+        // username.setPromptText("Seller Username");
+        // commissionPane.getChildren().add(username);
+
+        TextField premiumRate = new TextField();
+        premiumRate.setPromptText("Premium Rate (%)");
+        premiumPane.getChildren().add(premiumRate);
+
+        Button setPremium = new Button("Set Premium");
+        setPremium.setOnAction(e -> control.setPremium(premiumRate.getText()));
+        premiumPane.getChildren().add(setPremium);
+
+        return premiumPane;
     }
 }

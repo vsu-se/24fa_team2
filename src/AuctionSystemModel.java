@@ -26,6 +26,10 @@ public class AuctionSystemModel{
         this.buyerPremium = buyerPremium;
     }
 
+    public double getBuyerPremium(){
+        return buyerPremium;
+    }
+
     @Override
     public String toString(){
         String msg;

@@ -27,5 +27,11 @@ public class Controller {
         gui.lbl.setText("Commission set to " + aManager.getSellerCommission() + "%");
     }
 
+    public void setPremium(String premium){
+        aManager.setBuyerPremium(Double.parseDouble(premium));
+
+        gui.lbl.setText("Premium set to " + aManager.getBuyerPremium() + "%");
+    }
+
     //Thread to constantly update GUI Auction info?
 }

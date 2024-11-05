@@ -16,6 +16,7 @@ public class GUI extends Application {
     private VBox mainLayout = new VBox();
     private List<Auction> activeAuctions = new ArrayList<>();
     private Controller control;
+    private SA systemAdmin = new SA();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -61,9 +62,58 @@ public class GUI extends Application {
         mainLayout.getChildren().add(createRoleButtons());
         mainLayout.getChildren().add(createCommissionPane());
         mainLayout.getChildren().add(createPremiumPane());
+        mainLayout.getChildren().add(createCategoryManagementPane());
         mainLayout.getChildren().add(lbl);
         Label showConcludedAuctions = new Label("Show Concluded Auctions (Placeholder)");
         mainLayout.getChildren().add(showConcludedAuctions);
+    }
+
+    //category management pane
+    private Region createCategoryManagementPane() {
+        VBox categoryPane = new VBox();
+        categoryPane.setPadding(new Insets(10));
+        categoryPane.setSpacing(10);
+        categoryPane.setStyle("-fx-border-color: gray; -fx-border-width: 1px;");
+
+        Label categoryLabel = new Label("Category Management");
+        categoryLabel.setStyle("-fx-font-weight: bold");
+
+        // Add Category section
+        TextField categoryNameField = new TextField();
+        categoryNameField.setPromptText("Enter category name");
+
+        Button addCategoryBtn = new Button("Add Category");
+        addCategoryBtn.setOnAction(e -> {
+            String category = categoryNameField.getText().trim();
+            if (!category.isEmpty()) {
+                systemAdmin.addCategory(category);
+                categoryNameField.clear();
+            }
+        });
+
+        // Remove Category section
+        TextField removeCategoryField = new TextField();
+        removeCategoryField.setPromptText("Enter category to remove");
+
+        Button removeCategoryBtn = new Button("Remove Category");
+        removeCategoryBtn.setOnAction(e -> {
+            String category = removeCategoryField.getText().trim();
+            if (!category.isEmpty()) {
+                systemAdmin.removeCategory(category);
+                removeCategoryField.clear();
+            }
+        });
+
+        // Add all components to the pane
+        categoryPane.getChildren().addAll(
+            categoryLabel,
+            categoryNameField,
+            addCategoryBtn,
+            removeCategoryField,
+            removeCategoryBtn
+        );
+
+        return categoryPane;
     }
 
     private void showBuyerView() {

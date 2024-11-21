@@ -1,12 +1,24 @@
 
 public class Controller {
     private GUI gui;
+
+    public AuctionSystemModel getaManager() {
+        return aManager;
+    }
+
     private AuctionSystemModel aManager;
 
     public Controller(GUI gui){
         this.gui = gui;
         this.aManager = new AuctionSystemModel();
     }
+
+    // used for testing
+    public Controller(AuctionSystemModel aManager) {
+        this.gui = null; // GUI is unused in this scenario
+        this.aManager = aManager;
+    }
+
 
     public void createAuctionData(String title, String description, String category, String tags, String condition, String shippingCost, String buyNow, String duration){
         aManager.addAuction(createItem(title, description, category, condition, shippingCost), Double.parseDouble(buyNow));
@@ -21,16 +33,38 @@ public class Controller {
 
     }
 
-    public void setCommission(String commission){
-        aManager.setSellerCommission(Double.parseDouble(commission));
+    public void setCommission(String commission) {
+        try {
+            double comm = Double.parseDouble(commission);
+            aManager.setSellerCommission(comm);
 
-        gui.lbl.setText("Commission set to " + aManager.getSellerCommission() + "%");
+            // GUI update only if the GUI exists
+            if (gui != null && gui.lbl != null) {
+                gui.lbl.setText("Seller commission set to " + comm);
+            }
+        } catch (NumberFormatException e) {
+            if (gui != null && gui.lbl != null) {
+                gui.lbl.setText("Invalid commission value");
+            }
+            throw e; // Re-throw for testing purposes
+        }
     }
 
-    public void setPremium(String premium){
-        aManager.setBuyerPremium(Double.parseDouble(premium));
+    public void setPremium(String premium) {
+        try {
+            double prem = Double.parseDouble(premium);
+            aManager.setBuyerPremium(prem);
 
-        gui.lbl.setText("Premium set to " + aManager.getBuyerPremium() + "%");
+            // GUI update only if the GUI exists
+            if (gui != null && gui.lbl != null) {
+                gui.lbl.setText("Buyer premium set to " + prem);
+            }
+        } catch (NumberFormatException e) {
+            if (gui != null && gui.lbl != null) {
+                gui.lbl.setText("Invalid premium value");
+            }
+            throw e; // Re-throw for testing purposes
+        }
     }
 
     //Thread to constantly update GUI Auction info?

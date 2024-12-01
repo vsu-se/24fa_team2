@@ -1,3 +1,7 @@
+package Controllers;
+import AuctionSystemModel;
+import GUI;
+import Item;
 
 public class Controller {
     private GUI gui;

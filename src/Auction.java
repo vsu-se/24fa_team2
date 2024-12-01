@@ -1,5 +1,7 @@
 import java.util.Date;
 
+import Models.User;
+
 //comments to be added
 public class Auction {
     public Item item;

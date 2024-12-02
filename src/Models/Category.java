@@ -1,8 +1,8 @@
 package Models;
 
 public class Category {
-    String categoryId;
-    String name;
+    private String categoryId;
+    private String name;
 
     public Category(Stirng categoryId, Stirng name ) {
         this.categoryId = categoryId;

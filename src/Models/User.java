@@ -46,6 +46,9 @@ public class User {
     public void setCanBid(boolean canBid) {
         this.canBid = canBid;
     }
-
+    // verifyPassword method
+    public boolean verifyPassword(String inputPassword) {
+        return this.password.equals(inputPassword);
+    }
 
 }

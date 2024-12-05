@@ -3,6 +3,8 @@ package Controllers;
 import Models.Auction;
 import Models.Bid;
 import Models.User;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class BidController {
@@ -31,7 +33,7 @@ public class BidController {
     public Bid placeBid(String auctionId, double amount) {
         // Ensure the current user is logged in
         User currentUser = userController.getCurrentUser();
-        if (currentUser == null || !currentUser.getCanBid()) {
+        if (currentUser == null || !currentUser.isCanBid()) {
             throw new IllegalStateException("User must be logged in and have bidding permissions.");
         }
 
@@ -42,13 +44,13 @@ public class BidController {
         }
 
         // Validate the bid amount
-        if (amount <= auction.getHighestBid()) {
+        if (amount <= auction.getWinningBid().getAmount()) {
             throw new IllegalArgumentException("Bid amount must be higher than the current highest bid.");
         }
 
         // Create a new bid
         String bidId = generateBidId();
-        Bid bid = new Bid(bidId, auction, currentUser, amount, LocalDateTime.now());
+        Bid bid = new Bid(bidId, auction, currentUser, amount);
         bids.put(bidId, bid);
 
         // Update the auction's highest bid and add the bid
@@ -85,7 +87,7 @@ public class BidController {
     public List<Bid> getBidsByUser(User user) {
         List<Bid> userBids = new ArrayList<>();
         for (Bid bid : bids.values()) {
-            if (bid.getUser().equals(user)) {
+            if (bid.getBidder().equals(user)) {
                 userBids.add(bid);
             }
         }

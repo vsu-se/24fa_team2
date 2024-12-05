@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class CategoryController {
+    // Private attributes
+    private Map<String, Category> categories;
+    private static CategoryController instance;
+
+    // Private constructor 
+    private CategoryController() {
+        categories = new HashMap<>();
+    }
+
+    // Public method to get the Singleton instance
+    public static synchronized CategoryController getInstance() {
+        if (instance == null) {
+            instance = new CategoryController();
+        }
+        return instance;
+    }
+
+    // Method to create a new category
+    public Category createCategory(String name) {
+        String categoryId = generateCategoryId();
+        Category newCategory = new Category(categoryId, name);
+        categories.put(categoryId, newCategory);
+        return newCategory;
+    }
+
+    // Method to retrieve all categories
+    public List<Category> getAllCategories() {
+        return new ArrayList<>(categories.values());
+    }
+
+    // Method to retrieve a specific category by ID
+    public Category getCategory(String id) {
+        return categories.get(id);
+    }
+
+    // Private method to generate a unique category ID
+    private String generateCategoryId() {
+        return UUID.randomUUID().toString();
+    }
+
+}

@@ -1,17 +1,15 @@
 package Models;
-
+//admin controls
 public class SystemConfig {
     private double sellerCommission;
     private double buyerPremium;
-
     private static SystemConfig instance;
 
-    // Constructor
-    public SystemConfig() {
-        this.sellerCommission = 0.0;
-        this.buyerPremium = 0.0;
+    private SystemConfig() {
+        sellerCommission = 0.05; //5%
+        buyerPremium = 0.10; //10%
     }
-
+    //maintain only one systemConfig
     public static SystemConfig getInstance() {
         if (instance == null) {
             instance = new SystemConfig();
@@ -19,22 +17,16 @@ public class SystemConfig {
         return instance;
     }
 
-    // Getters and setters for sellerCommission
     public double getSellerCommission() {
         return sellerCommission;
     }
-
-    public void setSellerCommission(double sellerCommission) {
-        this.sellerCommission = sellerCommission;
-    }
-
-    // Getters and setters for buyerPremium
     public double getBuyerPremium() {
         return buyerPremium;
     }
-
-    public void setBuyerPremium(double buyerPremium) {
-        this.buyerPremium = buyerPremium;
+    public void setSellerCommission(double commission) {
+        this.sellerCommission = commission;
     }
-
+    public void setBuyerPremium(double premium) {
+        this.buyerPremium = premium;
+    }
 }

@@ -1,11 +1,11 @@
 package Views;
 
-import Controllers.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import Controllers.UserController;
 
 public class LoginView extends VBox {
     protected TextField usernameField;
@@ -13,6 +13,7 @@ public class LoginView extends VBox {
     protected Button loginButton;
     protected Button registerButton;
     protected Text messageText;
+    private UserController userController;
 
     public LoginView() {
         userController = UserController.getInstance();

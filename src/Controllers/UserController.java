@@ -1,21 +1,21 @@
 package Controllers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import Models.Admin;
 import Models.User;
+import Utils.FileManager;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserController {
     private Map<String, User> users;
     private User currentUser;
     private static UserController instance;
+    private FileManager fileManager;
 
     private UserController() {
+        fileManager = FileManager.getInstance();
         users = new HashMap<>();
-        // Default admin
-        Admin admin = new Admin("admin", "admin123");
-        users.put("admin", admin);
+        loadUsers();  // Load users when controller is initialized
     }
 
     // Singleton pattern to ensure one UserController instance
@@ -83,14 +83,17 @@ public class UserController {
         return false;
     }
 
-    // File operations (placeholders for persistence implementation)
     public void saveUsers() {
-        // Implement saving users to a file or database in the future
-        System.out.println("Saving users... (to be implemented)");
+        fileManager.saveUsers(users);
     }
 
-    public void loadUsers() {
-        // Implement loading users from a file or database in the future
-        System.out.println("Loading users... (to be implemented)");
+    private void loadUsers() {
+        users = fileManager.loadUsers();
+        if (users.isEmpty()) {
+            // Create default admin if no users exist
+            Admin admin = new Admin("admin", "admin123");
+            users.put("admin", admin);
+            saveUsers();
+        }
     }
 }

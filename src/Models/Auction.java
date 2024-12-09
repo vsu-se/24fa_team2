@@ -8,17 +8,11 @@ public class Auction {
     private String auctionId;
     private Item item;
     private double startingPrice;
-
-
     private double buyNowPrice;
     private LocalDateTime startTime;
-
-
     private LocalDateTime endTime;
     private boolean isActive;
-
     private List<Bid> bids = new ArrayList<Bid>();
-
     private Bid winningBid;
 
     public Auction(String auctionId, Item item, double startingPrice, double buyNowPrice, LocalDateTime startTime, LocalDateTime endTime) {
@@ -28,6 +22,8 @@ public class Auction {
         this.buyNowPrice = buyNowPrice;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.isActive = true;
+        this.bids = new ArrayList<>();
     }
 
     public boolean addBid(Bid bid) {

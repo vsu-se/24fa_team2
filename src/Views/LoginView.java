@@ -61,6 +61,7 @@ public class LoginView extends VBox {
         if (userController.login(username, password)) {
             messageText.setText("correct");
             //switch view to main
+            //getScene().setRoot(new AuctionView());
             getScene().setRoot(new MainView());
         } else {
             messageText.setText("wrong username/password or unregistered");

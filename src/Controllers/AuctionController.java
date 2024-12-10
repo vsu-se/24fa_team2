@@ -3,8 +3,6 @@ package Controllers;
 import Models.Auction;
 import Models.Item;
 import Models.User;
-import Models.Category;
-import Models.UserController;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -28,7 +26,7 @@ public class AuctionController {
     public Auction createAuction(Item item, double startingPrice, double buyNowPrice, 
                                LocalDateTime endTime) {
         User currentUser = userController.getCurrentUser();
-        if (!currentUser.getCanSell()) return null;
+        if (!currentUser.isCanSell()) return null;
 
         String auctionId = generateAuctionId();
         Auction auction = new Auction(auctionId, item, startingPrice, buyNowPrice, 

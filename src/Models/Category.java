@@ -1,10 +1,10 @@
 package Models;
 
 public class Category {
-    String categoryId;
-    String name;
+    private String categoryId;
+    private String name;
 
-    public Category(Stirng categoryId, Stirng name ) {
+    public Category(String categoryId, String name ) {
         this.categoryId = categoryId;
         this.name = name;
     }
@@ -17,7 +17,7 @@ public class Category {
         return name;
     }
 
-    public setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

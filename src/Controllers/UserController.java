@@ -1,23 +1,24 @@
 package Controllers;
-import java.util.HashMap;
-import java.util.Map;
 
 import Models.Admin;
 import Models.User;
+import Utils.FileManager;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserController {
     private Map<String, User> users;
     private User currentUser;
     private static UserController instance;
-    
+    private FileManager fileManager;
+
     private UserController() {
+        fileManager = FileManager.getInstance();
         users = new HashMap<>();
-        //efault admin
-        Admin admin = new Admin("admin", "admin123");
-        users.put("admin", admin);
+        loadUsers();  // Load users when controller is initialized
     }
-    
-    //one UserController
+
+    // Singleton pattern to ensure one UserController instance
     public static UserController getInstance() {
         if (instance == null) {
             instance = new UserController();
@@ -25,7 +26,7 @@ public class UserController {
         return instance;
     }
 
-    //user authentication
+    // User authentication
     public boolean login(String username, String password) {
         User user = users.get(username);
         if (user != null && user.verifyPassword(password)) {
@@ -39,18 +40,18 @@ public class UserController {
         currentUser = null;
     }
 
-    //user registers
+    // Register a new user
     public boolean registerUser(String username, String password) {
         if (users.containsKey(username)) {
-            return false;  //if username exists
+            return false; // Username already exists
         }
-        
+
         User newUser = new User(username, password);
         users.put(username, newUser);
         return true;
     }
 
-    // Current User Management
+    // Current user management
     public User getCurrentUser() {
         return currentUser;
     }
@@ -59,36 +60,40 @@ public class UserController {
         return currentUser instanceof Admin;
     }
 
-    // Permission Management
+    // Permission management
     public boolean toggleUserSellPermission(String username) {
-        if (!isAdmin()) return false; //not admin
-        
+        if (!isAdmin()) return false; // Only admins can toggle permissions
+
         User user = users.get(username);
-        if (user != null && !(user instanceof Admin)) { 
-            user.setCanSell(!user.getCanSell()); //flip permission
+        if (user != null && !(user instanceof Admin)) {
+            user.setCanSell(!user.isCanSell()); // Flip permission
             return true;
         }
         return false;
     }
 
     public boolean toggleUserBidPermission(String username) {
-        if (!isAdmin()) return false; //not admin
-        
+        if (!isAdmin()) return false; // Only admins can toggle permissions
+
         User user = users.get(username);
         if (user != null && !(user instanceof Admin)) {
-            user.setCanBid(!user.getCanBid()); //flip permission
+            user.setCanBid(!user.isCanSell()); // Flip permission
             return true;
         }
         return false;
     }
 
-    // File Operations
     public void saveUsers() {
-        // some utility controller maybe to handle
+        fileManager.saveUsers(users);
     }
 
-    public void loadUsers() {
-        // will be for loading users from file (persistence)
-        
+    private void loadUsers() {
+        users = fileManager.loadUsers();
+        if (users.isEmpty()) {
+            // Create default admin if no users exist
+            Admin admin = new Admin("admin", "admin123");
+            users.put("admin", admin);
+            saveUsers();
+        }
     }
 }

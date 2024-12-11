@@ -25,6 +25,9 @@ public class UserController {
         }
         return instance;
     }
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
 
     // User authentication
     public boolean login(String username, String password) {

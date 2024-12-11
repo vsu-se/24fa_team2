@@ -36,18 +36,13 @@ public class AuctionController {
         auctions.put(auctionId, auction);
         return auction;
     }
+    public Auction getAuction(String auctionID) {
+        return auctions.get(auctionID); // Retrieves auction by its unique ID
+    }
 
     public int getNumAuctions(){
         return auctions.size();
     }
-
-    //add createAuction
-    //add CreateAuctionResult
-    //add generateItemId
-    //add getActiveAuctions
-    //add getUserAuctions
-    //add checkAndEndAuctions
-
 
     // Create an auction with detailed user input, returning a result
     public CreateAuctionResult createNewAuction(String itemName, String itemDescription,
@@ -152,6 +147,7 @@ public class AuctionController {
             return message;
         }
     }
+
 }
 
 

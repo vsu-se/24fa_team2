@@ -1,6 +1,6 @@
 package Views;
 import Controllers.UserController;
-import javafx.scene.control.*;
+import javafx.scene.control.*; 
 import javafx.scene.layout.*;
 
 public class MainView extends BorderPane {
@@ -20,16 +20,19 @@ public class MainView extends BorderPane {
         Menu userMenu = new Menu("User");
 
         MenuItem viewAuctions = new MenuItem("View Auctions");
-        viewAuctions.setOnAction(e -> showAuctionList());
+        viewAuctions.setOnAction(e -> switchAuctionListView());
 
         MenuItem dashboard = new MenuItem("user view?");
         dashboard.setOnAction(e -> showUser());
+
+        MenuItem createAuction = new MenuItem("Create Auction");
+        createAuction.setOnAction(e -> switchCreateAuctionView());
 
         MenuItem logout = new MenuItem("Logout");
         logout.setOnAction(e -> handleLogout());
 
         auctionsMenu.getItems().add(viewAuctions);
-        userMenu.getItems().addAll(dashboard, logout);
+        userMenu.getItems().addAll(dashboard, createAuction, logout);
 
         //for admin only controls
         if (userController.isAdmin()) {
@@ -37,6 +40,11 @@ public class MainView extends BorderPane {
             MenuItem adminDashboard = new MenuItem("Admin");
             adminDashboard.setOnAction(e -> showAdmin());
             adminMenu.getItems().add(adminDashboard);
+
+            MenuItem manageCategories = new MenuItem("Manage Categories");
+            manageCategories.setOnAction(e -> switchCategoryManagement());
+            adminMenu.getItems().add(manageCategories);
+
             menuBar.getMenus().add(adminMenu);
         }
 
@@ -44,9 +52,13 @@ public class MainView extends BorderPane {
         setTop(menuBar);
     }
 
-    private void showAuctionList() {
+    private void switchAuctionListView() {
         //to add
-        getScene().setRoot(new AuctionView());
+        getScene().setRoot(new AuctionListView());
+    }
+
+    private void switchCreateAuctionView(){
+        getScene().setRoot(new CreateAuctionView());
     }
 
     private void showUser() {
@@ -55,6 +67,10 @@ public class MainView extends BorderPane {
 
     private void showAdmin() {
         //to add
+    }
+
+    private void switchCategoryManagement(){
+        getScene().setRoot(new CategoryView());
     }
 
     private void handleLogout() {

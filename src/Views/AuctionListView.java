@@ -4,12 +4,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.Pos;
 
-public class AuctionView extends ScrollPane{
+public class AuctionListView extends ScrollPane{
     private UserController userController;
     private AuctionController auctionController;
 
     //to show auctions in mainView
-    public AuctionView(){
+    public AuctionListView(){
         userController = UserController.getInstance();
         auctionController = AuctionController.getInstance();
 

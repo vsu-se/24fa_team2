@@ -1,9 +1,6 @@
 package Controllers;
 
-import Models.Auction;
-import Models.Item;
-import Models.User;
-import Models.Category;
+import Models.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -11,10 +8,12 @@ public class AuctionController {
     private Map<String, Auction> auctions;
     private static AuctionController instance;
     private UserController userController;
+    private CategoryController catController;
 
     private AuctionController() {
         auctions = new HashMap<>();
         userController = UserController.getInstance();
+        catController = CategoryController.getInstance();
     }
 
     public static AuctionController getInstance() {
@@ -24,18 +23,27 @@ public class AuctionController {
         return instance;
     }
 
-    // Create an auction directly
-    public Auction createAuction(Item item, double startingPrice, double buyNowPrice,
-                                 LocalDateTime endTime) {
+    public Auction createAuction(Item item, double startingPrice, double buyNowPrice, 
+                               LocalDateTime endTime) {
+        
         User currentUser = userController.getCurrentUser();
         if (!currentUser.isCanSell()) return null;
 
         String auctionId = generateAuctionId();
         Auction auction = new Auction(auctionId, item, startingPrice, buyNowPrice,
                 LocalDateTime.now(), endTime);
+
         auctions.put(auctionId, auction);
         return auction;
     }
+
+    //add createAuction
+    //add CreateAuctionResult
+    //add generateItemId
+    //add getActiveAuctions
+    //add getUserAuctions
+    //add checkAndEndAuctions
+
 
     // Create an auction with detailed user input, returning a result
     public CreateAuctionResult createNewAuction(String itemName, String itemDescription,

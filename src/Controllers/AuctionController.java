@@ -23,6 +23,10 @@ public class AuctionController {
         return instance;
     }
 
+    public Map<String, Auction> getAllAuctions(){
+        return auctions;
+    }
+
     public Auction createAuction(Item item, double startingPrice, double buyNowPrice, 
                                LocalDateTime endTime) {
         

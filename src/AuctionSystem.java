@@ -1,4 +1,5 @@
 
+import Controllers.AuctionController;
 import Controllers.CategoryController;
 import Controllers.UserController;
 import Views.LoginView;
@@ -20,6 +21,7 @@ public class AuctionSystem extends Application {
         primaryStage.setOnCloseRequest(e -> {
             UserController.getInstance().saveUsers();
             CategoryController.getInstance().saveCats();   
+            AuctionController.getInstance().saveAuctions();
         });
     }
 

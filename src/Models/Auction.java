@@ -33,18 +33,15 @@ public class Auction {
     }
 
     public boolean addBid(Bid bid) {
-        // Check if the bid is greater than the starting price and the current winning bid
-        if (bid.getAmount() >= startingPrice) {
-            // If the bid is the Buy Now price, immediately end the auction
-            if (bid.getAmount() == buyNowPrice) {
+
+        if((bids.isEmpty() && bid.getAmount() > startingPrice) || bid.getAmount() > winningBid.getAmount()){
+            bids.add(bid);
+            winningBid = bid;
+            if(bid.getAmount() == buyNowPrice){
                 endAuction();
             }
-            // If the bid is greater than the current winning bid (or if no winning bid exists)
-            if (winningBid == null || bid.getAmount() > winningBid.getAmount()) {
-                bids.add(bid);
-                winningBid = bid;
-                return true;
-            }
+
+            return true;
         }
         return false;
     }

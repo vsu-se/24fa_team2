@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.*;
+import Utils.FileManager;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -9,11 +10,14 @@ public class AuctionController {
     private static AuctionController instance;
     private UserController userController;
     private CategoryController catController;
+    private FileManager fileManager;
 
     private AuctionController() {
         auctions = new HashMap<>();
         userController = UserController.getInstance();
         catController = CategoryController.getInstance();
+        fileManager = FileManager.getInstance();
+        loadAuctions();
     }
 
     public static AuctionController getInstance() {
@@ -131,6 +135,14 @@ public class AuctionController {
     // Generate an item ID for future use (if necessary)
     public String generateItemId() {
         return "ITEM" + UUID.randomUUID();
+    }
+
+    public void loadAuctions(){
+        auctions = fileManager.loadAuctions();
+    }
+
+    public void saveAuctions(){
+        fileManager.saveAuctions(auctions);
     }
 
     // Inner class to return the result of creating an auction

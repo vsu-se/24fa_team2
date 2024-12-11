@@ -34,9 +34,13 @@ public class AuctionListView extends ScrollPane{
         return auctionGrid;
     }
 
-    public Pane template(Auction i){
+    public Pane template(Auction auction){
         VBox temp = new VBox();
-        temp.getChildren().add(new Label(i.getItem().getName()));
+
+        Label itemName = new Label(auction.getItem().getName());
+        Label itemDesc = new Label(auction.getItem().getDescription());
+        Label currPrice = new Label(String.valueOf(auction.getStartingPrice()));
+        temp.getChildren().addAll(itemName, itemDesc, currPrice);
         temp.setPrefSize(250, 400);
         temp.setAlignment(Pos.CENTER);
         temp.setStyle("-fx-border-width: 2;"+

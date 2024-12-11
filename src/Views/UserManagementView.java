@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.Pos;
 import java.util.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 
 public class UserManagementView extends BorderPane{
     private UserController userController;
@@ -46,7 +48,7 @@ public class UserManagementView extends BorderPane{
         }else{
             btnBidRights.setText("Enable");
         }
-        btnBidRights.setOnAction(e -> changeBidRights(user));
+        btnBidRights.setOnAction(e -> changeBidRights(user, btnBidRights, lblBidRights));
         hbBidRights.getChildren().addAll(lblBidRights, btnBidRights);
 
         HBox hbSellRights = new HBox();
@@ -57,7 +59,7 @@ public class UserManagementView extends BorderPane{
         }else{
             btnSellRights.setText("Enable");
         }
-        btnSellRights.setOnAction(e -> changeSellRights(user));
+        btnSellRights.setOnAction(e -> changeSellRights(user, btnSellRights, lblSellRights));
         hbSellRights.getChildren().addAll(lblSellRights, btnSellRights);
 
         temp.getChildren().addAll(hbBidRights, hbSellRights);
@@ -65,11 +67,19 @@ public class UserManagementView extends BorderPane{
         return temp;
     }
 
-    public void changeBidRights(User user){
+    public void changeBidRights(User user, Button button, Label label){
         userController.toggleUserBidPermission(user.getUsername());
+        boolean newStatus = user.isCanBid();
+        button.setText(newStatus ? "Disable" : "Enable");
+        label.setText("Bid Rights: " + newStatus);
+        button.setFocusTraversable(false);
     }
-
-    public void changeSellRights(User user){
+    
+    public void changeSellRights(User user, Button button, Label label){
         userController.toggleUserSellPermission(user.getUsername());
+        boolean newStatus = user.isCanSell();
+        button.setText(newStatus ? "Disable" : "Enable");
+        label.setText("Sell Rights: " + newStatus);
+        button.setFocusTraversable(false);  
     }
 }

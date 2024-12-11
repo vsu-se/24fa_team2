@@ -76,7 +76,8 @@ public class FileManager {
         catController = CategoryController.getInstance();
         userController = UserController.getInstance();
 
-        for(Auction auction : auctions:values()){
+        for(Auction auction : auctions.values()){
+            //Auction auction = entry.getValue();
             JSONObject jsonAuction = new JSONObject();
 
             jsonAuction.put("auctionID", auction.getAuctionId());
@@ -86,6 +87,8 @@ public class FileManager {
             jsonAuction.put("startTime", auction.getStartTime().toString());
             jsonAuction.put("endTime", auction.getEndTime().toString());
             
+
+            jsonAuctions.add(jsonAuction);
             //ADD BIDS
 
         }
@@ -171,6 +174,8 @@ public class FileManager {
     }
 
     public Item itemizeToken(JSONObject jsonItem){
+        catController = CategoryController.getInstance();
+        userController = UserController.getInstance();
         String itemID = (String) jsonItem.get("itemID");
         String name = (String) jsonItem.get("name");
         String desc = (String) jsonItem.get("desc");

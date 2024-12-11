@@ -1,4 +1,5 @@
 
+import Controllers.CategoryController;
 import Controllers.UserController;
 import Views.LoginView;
 import javafx.application.Application;
@@ -18,6 +19,7 @@ public class AuctionSystem extends Application {
         // Set up shutdown hook to save data when application closes
         primaryStage.setOnCloseRequest(e -> {
             UserController.getInstance().saveUsers();
+            CategoryController.getInstance().saveCats();
         });
     }
 

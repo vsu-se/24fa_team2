@@ -1,16 +1,21 @@
 package Controllers;
 
 import Models.Category;
+import Utils.FileManager;
 import java.util.*;
 
 public class CategoryController {
     // Private attributes
     private Map<String, Category> categories;
     private static CategoryController instance;
+    private FileManager fileManager;
 
     // Private constructor
     private CategoryController() {
+        fileManager = FileManager.getInstance();
         categories = new HashMap<>();
+        loadCats();
+
     }
 
     // Public method to get the Singleton instance (thread-safe)
@@ -67,5 +72,12 @@ public class CategoryController {
             return true;
         }
         return false;
+    }
+
+    public void saveCats(){
+        fileManager.saveCategories(categories);
+    }
+    private void loadCats(){
+        categories = fileManager.loadCats();
     }
 }

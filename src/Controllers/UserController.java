@@ -40,12 +40,16 @@ public class UserController {
         currentUser = null;
     }
 
+    public Map<String, User> getUsers(){
+        return users;
+    }
+
     // Register a new user
     public boolean registerUser(String username, String password) {
         if (users.containsKey(username)) {
             return false; // Username already exists
         }
-        
+
         User newUser = new User(username, password);
         users.put(username, newUser);
    
@@ -56,6 +60,10 @@ public class UserController {
     // Current user management
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    public int getNumUsers(){
+        return users.size();
     }
 
     public boolean isAdmin() {
@@ -97,5 +105,9 @@ public class UserController {
             users.put("admin", admin);
             saveUsers();
         }
+    }
+
+    public User getUser(String username){
+        return users.get(username);
     }
 }

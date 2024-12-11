@@ -37,13 +37,17 @@ public class MainView extends BorderPane {
         //for admin only controls
         if (userController.isAdmin()) {
             Menu adminMenu = new Menu("Admin");
+
             MenuItem adminDashboard = new MenuItem("Admin");
             adminDashboard.setOnAction(e -> showAdmin());
-            adminMenu.getItems().add(adminDashboard);
 
             MenuItem manageCategories = new MenuItem("Manage Categories");
             manageCategories.setOnAction(e -> switchCategoryManagement());
-            adminMenu.getItems().add(manageCategories);
+
+            MenuItem manageUsers = new MenuItem("Manage Users");
+            manageUsers.setOnAction(e -> switchUserManagement());
+
+            adminMenu.getItems().addAll(adminDashboard, manageCategories, manageUsers);
 
             menuBar.getMenus().add(adminMenu);
         }
@@ -54,11 +58,13 @@ public class MainView extends BorderPane {
 
     private void switchAuctionListView() {
         //to add
-        getScene().setRoot(new AuctionListView());
+        setCenter(new AuctionListView());
+        //getScene().setRoot(new AuctionListView());
     }
 
     private void switchCreateAuctionView(){
-        getScene().setRoot(new CreateAuctionView());
+        setCenter(new CreateAuctionView());
+        //getScene().setRoot(new CreateAuctionView());
     }
 
     private void showUser() {
@@ -71,6 +77,10 @@ public class MainView extends BorderPane {
 
     private void switchCategoryManagement(){
         getScene().setRoot(new CategoryView());
+    }
+
+    private void switchUserManagement(){
+        getScene().setRoot(new UserManagementView());
     }
 
     private void handleLogout() {

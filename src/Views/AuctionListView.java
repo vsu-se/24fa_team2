@@ -21,7 +21,7 @@ public class AuctionListView extends ScrollPane{
     public TilePane genAuctionGrid(){
         TilePane auctionGrid = new TilePane();
 
-        for(int i = 0; i < 15; i++){
+        for(int i = 0; i < auctionController.getNumAuctions(); i++){
             auctionGrid.getChildren().add(template(i));
         }
 

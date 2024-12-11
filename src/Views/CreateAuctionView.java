@@ -10,6 +10,7 @@ public class CreateAuctionView extends VBox{
     private UserController userController;
     private AuctionController auctionController;
     private CategoryController catController;
+    private TextField txfStatus = new TextField();
 
     public CreateAuctionView(){
         userController = UserController.getInstance();
@@ -68,12 +69,12 @@ public class CreateAuctionView extends VBox{
                                                         txfEndTime.getText()));
 
         getChildren().addAll(hbItemName, hbItemDesc, hbItemShippingCost, 
-                             hbItemCat, hbStartingPrice, hbBuyNow, hbEndTime, btnCreateAuction);
+                             hbItemCat, hbStartingPrice, hbBuyNow, hbEndTime, btnCreateAuction, txfStatus);
     }
 
     public void createAuction(String itemName, String description, String shippingCost, 
                                 String category, String startingPrice, String buyNowPrice, String endTime){
-        //auctionController.createNewAuction(itemName, description, shippingCost, 
-                                        //endTime, category);
+        txfStatus.setText((auctionController.createNewAuction(itemName, description, shippingCost, 
+                                        endTime, category)).getMessage());
     }
 }

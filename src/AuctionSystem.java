@@ -19,7 +19,7 @@ public class AuctionSystem extends Application {
         // Set up shutdown hook to save data when application closes
         primaryStage.setOnCloseRequest(e -> {
             UserController.getInstance().saveUsers();
-            CategoryController.getInstance().saveCats();
+            CategoryController.getInstance().saveCats();   
         });
     }
 

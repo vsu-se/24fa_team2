@@ -1,8 +1,6 @@
 package Controllers;
 
-import Models.Auction;
-import Models.Item;
-import Models.User;
+import Models.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -23,8 +21,9 @@ public class AuctionController {
         return instance;
     }
 
-    public Auction createAuction(Item item, double startingPrice, double buyNowPrice, 
+    public Auction createAuction(String itemID, String itemName, String description, String shippingCost, Category category, double startingPrice, double buyNowPrice, 
                                LocalDateTime endTime) {
+        Item item = new Item(itemID, itemName, description, Double.parseDouble(shippingCost), category, userController.getCurrentUser());
         User currentUser = userController.getCurrentUser();
         if (!currentUser.isCanSell()) return null;
 
@@ -34,6 +33,7 @@ public class AuctionController {
         auctions.put(auctionId, auction);
         return auction;
     }
+
     //add createAuction
     //add CreateAuctionResult
     //add generateItemId

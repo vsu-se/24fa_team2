@@ -76,16 +76,16 @@ public class MainView extends BorderPane {
     }
 
     private void switchCategoryManagement(){
-        getScene().setRoot(new CategoryView());
+        setCenter(new CategoryView());
     }
 
     private void switchUserManagement(){
-        getScene().setRoot(new UserManagementView());
+        setCenter(new UserManagementView());
     }
 
     private void handleLogout() {
         userController.logout();
-        getScene().setRoot(new LoginView());
+        setCenter(new LoginView());
     }
 }
 

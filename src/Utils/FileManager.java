@@ -14,11 +14,15 @@ public class FileManager {
     private static final String DATA_DIR = "auctionData";
     private static final String USERS_FILE = "users.json";
     private static final String CATS_FILE = "cats.json";
+    private static final String AUCTIONS_FILE = "auctions.json";
 
     private static FileManager instance;
+    private CategoryController catController;
+    private UserController userController;
 
     private FileManager() {
         initialize();
+        
     }
 
     public static FileManager getInstance() {
@@ -67,6 +71,40 @@ public class FileManager {
         writeJSONToFile(CATS_FILE, jsonCats);
     }
 
+    public void saveAuctions(Map<String, Auction> auctions){
+        JSONArray jsonAuctions = new JSONArray();
+        catController = CategoryController.getInstance();
+        userController = UserController.getInstance();
+
+        for(Auction auction : auctions:values()){
+            JSONObject jsonAuction = new JSONObject();
+
+            jsonAuction.put("auctionID", auction.getAuctionId());
+            jsonAuction.put("item", tokenizeItem(auction.getItem()));
+            jsonAuction.put("starting", String.valueOf(auction.getStartingPrice()));
+            jsonAuction.put("buyNow", String.valueOf(auction.getBuyNowPrice()));
+            jsonAuction.put("startTime", auction.getStartTime().toString());
+            jsonAuction.put("endTime", auction.getEndTime().toString());
+            
+            //ADD BIDS
+
+        }
+
+        writeJSONToFile(AUCTIONS_FILE, jsonAuctions);
+    }
+
+    public JSONObject tokenizeItem(Item item){
+        JSONObject jsonItem = new JSONObject();
+        jsonItem.put("itemID", item.getItemId());
+        jsonItem.put("name", item.getName());
+        jsonItem.put("desc", item.getDescription());
+        jsonItem.put("shipping", String.valueOf(item.getShippingCost()));
+        jsonItem.put("category", item.getCategory().getName());
+        jsonItem.put("seller", item.getSeller().getUsername());
+
+        return jsonItem;
+    }
+
     //---Break Load Methods following
     public Map<String, User> loadUsers() {
         Map<String, User> users = new HashMap<>();
@@ -106,6 +144,41 @@ public class FileManager {
         }
 
         return cats;
+    }
+
+    public Map<String, Auction> loadAuctions(){
+        Map<String, Auction> auctions = new HashMap<>();
+        JSONArray jsonAuctions = readJSONArrayFromFile(AUCTIONS_FILE);
+
+        if(jsonAuctions != null){
+            for(Object obj : jsonAuctions){
+                JSONObject jsonAuction = (JSONObject) obj;
+
+                String auctionID = (String) jsonAuction.get("auctionID");
+                Item item = itemizeToken((JSONObject)jsonAuction.get("item"));
+                double starting = Double.parseDouble((String) jsonAuction.get("starting"));
+                double buyNow = Double.parseDouble((String) jsonAuction.get("buyNow"));
+                LocalDateTime startTime = LocalDateTime.parse((String) jsonAuction.get("startTime"));
+                LocalDateTime endTime = LocalDateTime.parse((String) jsonAuction.get("endTime"));
+
+                auctions.put(auctionID, new Auction(auctionID, item, starting, buyNow, startTime, endTime));
+
+            }
+        }
+
+
+        return auctions;
+    }
+
+    public Item itemizeToken(JSONObject jsonItem){
+        String itemID = (String) jsonItem.get("itemID");
+        String name = (String) jsonItem.get("name");
+        String desc = (String) jsonItem.get("desc");
+        double shipping = Double.parseDouble((String) jsonItem.get("shipping"));
+        Category category = catController.getCategory((String) jsonItem.get("category"));
+        User seller = userController.getUser((String) jsonItem.get("seller"));
+
+        return new Item(itemID, name, desc, shipping, category, seller);
     }
 
     // helper methods

@@ -58,11 +58,13 @@ public class MainView extends BorderPane {
 
     private void switchAuctionListView() {
         //to add
-        getScene().setRoot(new AuctionListView());
+        setCenter(new AuctionListView());
+        //getScene().setRoot(new AuctionListView());
     }
 
     private void switchCreateAuctionView(){
-        getScene().setRoot(new CreateAuctionView());
+        setCenter(new CreateAuctionView());
+        //getScene().setRoot(new CreateAuctionView());
     }
 
     private void showUser() {

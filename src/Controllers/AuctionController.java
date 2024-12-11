@@ -37,6 +37,10 @@ public class AuctionController {
         return auction;
     }
 
+    public int getNumAuctions(){
+        return auctions.size();
+    }
+
     //add createAuction
     //add CreateAuctionResult
     //add generateItemId

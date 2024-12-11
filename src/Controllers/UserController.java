@@ -106,4 +106,8 @@ public class UserController {
             saveUsers();
         }
     }
+
+    public User getUser(String username){
+        return users.get(username);
+    }
 }

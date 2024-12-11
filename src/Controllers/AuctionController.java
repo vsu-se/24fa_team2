@@ -47,14 +47,20 @@ public class AuctionController {
 
     // Create an auction with detailed user input, returning a result
     public CreateAuctionResult createNewAuction(String itemName, String itemDescription,
-                                                double shippingCost, String endTimeStr,
-                                                Category category) {
+                                                String shippingCostStr, String endTimeStr,
+                                                String categoryStr) {
+        
         User currentUser = userController.getCurrentUser();
         if (!currentUser.isCanSell()) {
             return new CreateAuctionResult(false, "You do not have permission to create an auction.");
         }
 
         try {
+            // Parse shipping cost
+            double shippingCost = Double.parseDouble(shippingCostStr);
+
+            //Parse category
+            Category category = catController.getCategory(categoryStr);
             // Parse end time
             LocalDateTime endTime = LocalDateTime.parse(endTimeStr);
 

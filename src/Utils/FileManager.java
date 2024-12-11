@@ -13,6 +13,7 @@ import Controllers.*;
 public class FileManager {
     private static final String DATA_DIR = "auctionData";
     private static final String USERS_FILE = "users.json";
+    private static final String CATS_FILE = "cats.json";
 
     private static FileManager instance;
 
@@ -52,6 +53,20 @@ public class FileManager {
         
         writeJSONToFile(USERS_FILE, jsonUsers);
     }
+
+    public void saveCategories(Map<String, Category> cats){
+        JSONArray jsonCats = new JSONArray();
+
+        for(Category cat : cats.values()){
+            JSONObject jsonCat = new JSONObject();
+            jsonCat.put("name", cat.getName());
+
+            jsonCats.add(jsonCat);
+        }
+
+        writeJSONToFile(CATS_FILE, jsonCats);
+    }
+
     //---Break Load Methods following
     public Map<String, User> loadUsers() {
         Map<String, User> users = new HashMap<>();
@@ -73,6 +88,24 @@ public class FileManager {
         }
         
         return users;
+    }
+
+    public Map<String, Category> loadCats(){
+        Map<String, Category> cats = new HashMap<>();
+        JSONArray jsonCats = readJSONArrayFromFile(CATS_FILE);
+
+        if(jsonCats != null){
+            for(Object obj : jsonCats){
+                JSONObject jsonCat = (JSONObject) obj;
+                String name = (String) jsonCat.get("name");
+
+                Category cat = new Category(name, name);
+
+                cats.put(name, cat);
+            }
+        }
+
+        return cats;
     }
 
     // helper methods

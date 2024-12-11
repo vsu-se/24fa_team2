@@ -4,14 +4,17 @@ import java.time.LocalDateTime;
 import Controllers.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+import javafx.collections.*;
 
 public class CreateAuctionView extends VBox{
     private UserController userController;
     private AuctionController auctionController;
+    private CategoryController catController;
 
     public CreateAuctionView(){
         userController = UserController.getInstance();
         auctionController = AuctionController.getInstance();
+        catController = CategoryController.getInstance();
 
         /*
         HBox hbItemID = new HBox();
@@ -37,10 +40,8 @@ public class CreateAuctionView extends VBox{
         
         HBox hbItemCat = new HBox();
         Label lblItemCat = new Label("Item Category: ");
-        TextField txfItemCat = new TextField();
-        hbItemCat.getChildren().addAll(lblItemCat, txfItemCat);
-        
-        //item user = curUser
+        ComboBox cbItemCat = new ComboBox(FXCollections.observableArrayList(catController.getAllCategories()));
+        hbItemCat.getChildren().addAll(lblItemCat, cbItemCat);
         
         HBox hbStartingPrice = new HBox();
         Label lblStartingPrice = new Label("Starting Price: ");
@@ -57,20 +58,20 @@ public class CreateAuctionView extends VBox{
         TextField txfEndTime = new TextField();
         hbEndTime.getChildren().addAll(lblEndTime, txfEndTime);
 
-        Button createAuction = new Button("Create Auction");
-        createAuction.setOnAction(e -> createNewAuction(txfItemName.getText(),
+        Button btnCreateAuction = new Button("Create Auction");
+        btnCreateAuction.setOnAction(e -> createAuction(txfItemName.getText(),
                                                         txfItemDesc.getText(),
                                                         txfItemShippingCost.getText(),
-                                                        txfItemCat.getText(),
+                                                        cbItemCat.getValue().toString(),
                                                         txfStartingPrice.getText(),
                                                         txfBuyNow.getText(),
                                                         txfEndTime.getText()));
 
         getChildren().addAll(hbItemName, hbItemDesc, hbItemShippingCost, 
-                             hbItemCat, hbStartingPrice, hbBuyNow, hbEndTime, createAuction);
+                             hbItemCat, hbStartingPrice, hbBuyNow, hbEndTime, btnCreateAuction);
     }
 
-    public void createNewAuction(String itemName, String description, String shippingCost, 
+    public void createAuction(String itemName, String description, String shippingCost, 
                                 String category, String startingPrice, String buyNowPrice, String endTime){
         //auctionController.createNewAuction(itemName, description, shippingCost, 
                                         //endTime, category);

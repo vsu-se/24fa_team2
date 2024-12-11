@@ -11,6 +11,11 @@ public class Auction {
     private double buyNowPrice;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+
+    public boolean isActive() {
+        return isActive;
+    }
+
     private boolean isActive;
     private List<Bid> bids = new ArrayList<Bid>();
     private Bid winningBid;

@@ -40,6 +40,11 @@ public class MainView extends BorderPane {
             MenuItem adminDashboard = new MenuItem("Admin");
             adminDashboard.setOnAction(e -> showAdmin());
             adminMenu.getItems().add(adminDashboard);
+
+            MenuItem manageCategories = new MenuItem("Manage Categories");
+            manageCategories.setOnAction(e -> switchCategoryManagement());
+            adminMenu.getItems().add(manageCategories);
+
             menuBar.getMenus().add(adminMenu);
         }
 
@@ -62,6 +67,10 @@ public class MainView extends BorderPane {
 
     private void showAdmin() {
         //to add
+    }
+
+    private void switchCategoryManagement(){
+        getScene().setRoot(new CategoryView());
     }
 
     private void handleLogout() {

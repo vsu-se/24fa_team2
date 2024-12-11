@@ -45,9 +45,11 @@ public class UserController {
         if (users.containsKey(username)) {
             return false; // Username already exists
         }
-
+        
         User newUser = new User(username, password);
         users.put(username, newUser);
+   
+
         return true;
     }
 

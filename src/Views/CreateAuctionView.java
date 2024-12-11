@@ -1,4 +1,6 @@
 package Views;
+import java.time.LocalDateTime;
+
 import Controllers.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -11,10 +13,12 @@ public class CreateAuctionView extends VBox{
         userController = UserController.getInstance();
         auctionController = AuctionController.getInstance();
 
+        /*
         HBox hbItemID = new HBox();
         Label lblItemID = new Label("Item ID: ");
         TextField txfItemID = new TextField();
         hbItemID.getChildren().addAll(lblItemID, txfItemID);
+        */
 
         HBox hbItemName = new HBox();
         Label lblItemName = new Label("Item Name: ");
@@ -54,13 +58,21 @@ public class CreateAuctionView extends VBox{
         hbEndTime.getChildren().addAll(lblEndTime, txfEndTime);
 
         Button createAuction = new Button("Create Auction");
-        createAuction.setOnAction(e -> createNewAuction());
+        createAuction.setOnAction(e -> createNewAuction(txfItemName.getText(),
+                                                        txfItemDesc.getText(),
+                                                        txfItemShippingCost.getText(),
+                                                        txfItemCat.getText(),
+                                                        txfStartingPrice.getText(),
+                                                        txfBuyNow.getText(),
+                                                        txfEndTime.getText()));
 
-        getChildren().addAll(hbItemID, hbItemName, hbItemDesc, hbItemShippingCost, 
+        getChildren().addAll(hbItemName, hbItemDesc, hbItemShippingCost, 
                              hbItemCat, hbStartingPrice, hbBuyNow, hbEndTime, createAuction);
     }
 
-    public void createNewAuction(){
-
+    public void createNewAuction(String itemName, String description, String shippingCost, 
+                                String category, String startingPrice, String buyNowPrice, String endTime){
+        //auctionController.createNewAuction(itemName, description, shippingCost, 
+                                        //endTime, category);
     }
 }

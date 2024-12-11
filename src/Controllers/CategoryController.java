@@ -1,7 +1,7 @@
 package Controllers;
 
-import java.util.*;
 import Models.Category;
+import java.util.*;
 
 public class CategoryController {
     // Private attributes
@@ -22,24 +22,28 @@ public class CategoryController {
     }
 
     // Method to create a new category
-    public Category createCategory(String name) {
+    public Boolean createCategory(String name) {
         // Check if a category with the same name already exists
         for (Category category : categories.values()) {
             if (category.getName().equalsIgnoreCase(name)) {
-                throw new IllegalArgumentException("Category with the name '" + name + "' already exists.");
+                return false;
             }
         }
 
         // Generate unique ID and create a new category
         String categoryId = generateCategoryId();
-        Category newCategory = new Category(categoryId, name);
-        categories.put(categoryId, newCategory);
-        return newCategory;
+        Category newCategory = new Category(name, name);
+        categories.put(name, newCategory);
+        return true;
     }
 
     // Method to retrieve all categories
-    public List<Category> getAllCategories() {
-        return new ArrayList<>(categories.values());
+    public List<String> getAllCategories() {
+        ArrayList<String> cats = new ArrayList<>();
+        for(Map.Entry<String, Category> entry : categories.entrySet()){
+            cats.add(entry.getKey());
+        }
+        return cats;
     }
 
     // Method to retrieve a specific category by ID

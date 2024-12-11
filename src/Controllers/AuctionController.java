@@ -8,10 +8,12 @@ public class AuctionController {
     private Map<String, Auction> auctions;
     private static AuctionController instance;
     private UserController userController;
+    private CategoryController catController;
 
     private AuctionController() {
         auctions = new HashMap<>();
         userController = UserController.getInstance();
+        catController = CategoryController.getInstance();
     }
 
     public static AuctionController getInstance() {
@@ -21,15 +23,16 @@ public class AuctionController {
         return instance;
     }
 
-    public Auction createAuction(String itemID, String itemName, String description, String shippingCost, Category category, double startingPrice, double buyNowPrice, 
+    public Auction createAuction(Item item, double startingPrice, double buyNowPrice, 
                                LocalDateTime endTime) {
-        Item item = new Item(itemID, itemName, description, Double.parseDouble(shippingCost), category, userController.getCurrentUser());
+        
         User currentUser = userController.getCurrentUser();
         if (!currentUser.isCanSell()) return null;
 
         String auctionId = generateAuctionId();
         Auction auction = new Auction(auctionId, item, startingPrice, buyNowPrice,
                 LocalDateTime.now(), endTime);
+
         auctions.put(auctionId, auction);
         return auction;
     }

@@ -1,7 +1,7 @@
 package Views;
 import Controllers.UserController;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 
 public class MainView extends BorderPane {
     private MenuBar menuBar;
@@ -46,6 +46,7 @@ public class MainView extends BorderPane {
 
     private void showAuctionList() {
         //to add
+        getScene().setRoot(new AuctionView());
     }
 
     private void showUser() {
